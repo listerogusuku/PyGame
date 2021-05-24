@@ -26,3 +26,26 @@ WIDTH, HEIGHT = 700, 700 #Dimensões do display
 JANELA = pygame.display.set_mode((WIDTH, HEIGHT)) #Definição do display
 pygame.display.set_caption("Projeto Final - DESIGN DE SOFTWARE") #Nome do jogo
 
+def main(): #Função principal
+    anda = True
+    FPS = 60
+    fase = 0
+    vidas = 5
+    texto_inicio = pygame.font.SysFont("Arial", 50) #Escolhemos a fonte Arial por ser uma fonte padrão
+    texto_quando_perde = pygame.font.SysFont("Arial", 60)
+
+    inimigos = []
+    alcance_do_inimigo = 5
+    velocidade_do_inimigo = 1
+
+    velocidade_do_jogador = 5
+    velocidade_da_bala = 5
+
+    jogador = Jogador(300, 630) #criar classe do jogador
+
+    temporizador = pygame.time.Clock()
+
+    perdeu = False
+    contada_perdas = 0
+
+
