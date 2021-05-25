@@ -32,9 +32,9 @@ def main(): #Função principal
     fase = 0
     vidas = 5
     texto_inicio = pygame.font.SysFont("Arial", 50) #Escolhemos a fonte Arial por ser uma fonte padrão
-    texto_quando_perde = pygame.font.SysFont("Arial", 60)
+    texto_quando_perde = pygame.font.SysFont("Arial", 60) #não achei a fonte tão legal, vc não acha que seria melhor uma mais estilo game?
 
-    inimigos = []
+    inimigos = [] #precisamos definir os inimigos!!!
     alcance_do_inimigo = 5
     velocidade_do_inimigo = 1
 
@@ -46,6 +46,5 @@ def main(): #Função principal
     temporizador = pygame.time.Clock()
 
     perdeu = False
-    contada_perdas = 0
-
+    contada_perdas = 0 #não entendi o que vc quis dizer aqui
 
