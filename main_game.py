@@ -12,6 +12,10 @@
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+#Assim como havíamos conversado, acho que nosso jogo pode atirar em zumbis ou criar
+#tipo de uma competição entre brands, na qual uma destruiria a outra, entende?
+#vamos conversar melhor sobre esses tópicos quando nos reunirmos, ok?
+#Só estou escrevendo aqui para não nos esquecermos
 
 #Importando as bibliotecas necessárias
 import pygame
