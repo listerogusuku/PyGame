@@ -25,6 +25,7 @@ import random
 
 pygame.font.init() #Inicializa as fontes do pygame para serem utilizadas no jogo
 
+
 #Definindo altura e largura da janela do jogo
 WIDTH, HEIGHT = 700, 700 #Dimensões da tela
 JANELA = pygame.display.set_mode((WIDTH, HEIGHT)) #Definição do display
@@ -32,22 +33,23 @@ pygame.display.set_caption("Kill Covid Game") #Nome do jogo
 
 #Imagens que vão ser utilizadas
 VIRUS_VERMELHO = pygame.image.load(os.path.join("caveira_virus.png")) #Vírus Caveira Vermelha
-VIRUS_ERRO = pygame.image.load(os.path.join("erro_404.png")) #Erro 404
+VIRUS_ERRO = pygame.image.load(os.path.join("erro_404_2.png")) #Erro 404
 VIRUS_TROJAN = pygame.image.load(os.path.join("trojan.png")) #Trojan / Cavalo de Tróia
 
 #Defesa do Jogador
 mcafee = pygame.image.load(os.path.join("mcafee.png")) #Defesa do jogador ==> Logotipo do antivírus McAfee
 
 #Contaminação/Problemas:
-CONTAMINACAO_CAVEIRA = pygame.image.load(os.path.join("laser_virus_vermelho.png")) #caveira da morte vírus
-CONTAMINACAO_ERRO = pygame.image.load(os.path.join("laser_virus_preto.png")) #Erro lançado
-CONTAMINACAO_AMARELA = pygame.image.load(os.path.join("laser_virus_amarelo.png")) #trojan contaminando
+CONTAMINACAO_CAVEIRA = pygame.image.load(os.path.join("laser_virus_vermelho_robozinho.png")) #caveira da morte vírus
+CONTAMINACAO_ERRO = pygame.image.load(os.path.join("laser_virus_preto_robozinho.png")) #Erro lançado
+CONTAMINACAO_AMARELA = pygame.image.load(os.path.join("laser_virus_amarelo_trojan.png")) #trojan contaminando
 ANTIVIRUS = pygame.image.load(os.path.join("remedio_antivirus.png")) #remédio do antivírus
 
 #Fundo do jogo
 BACKGROUND = pygame.transform.scale(pygame.image.load(os.path.join("background_tech.png")), (WIDTH, HEIGHT)) #fundo do jogo (POR ENQUANTO TEMPORÁRIO, PODEREMOS ALTERAR EM BREVE PARA UM MELHOR!!!)
 #Eu também coloquei algumas imagens que, se você quiser, podemos alterar, mas achei bonitinho para o início
 #Se for necessário, eu consigo fazer outras imagens também
+
 
 
 def main(): #Função principal
