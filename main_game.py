@@ -51,6 +51,26 @@ BACKGROUND = pygame.transform.scale(pygame.image.load(os.path.join("background_t
 #Se for necessário, eu consigo fazer outras imagens também
 
 
+#Orientação dos vírus
+class Virus:
+    def __init__(self, x, y, img):
+        self.x = x
+        self.y = y
+        self.img = img
+        self.mask = pygame.mask.from_surface(self.img)
+#Desenhando a janela do jogo
+    def desenhar(self, janela_game):
+        janela_game.blit(self.img, (self.x, self.y))
+#Definindo os movimentos
+    def movimentacao(self, vel):
+        self.y += vel
+
+    def fora_da_tela(self, height):
+        return not(self.y <= height and self.y >= 0)
+
+    def impacto(self, obj):
+        return colisao(self, obj)
+
 
 def main(): #Função principal
     anda = True
