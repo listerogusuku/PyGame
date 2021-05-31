@@ -63,7 +63,7 @@ class Virus:
     def desenhar(self, janela_game):
         janela_game.blit(self.img, (self.x, self.y))
 
-#Definindo os movimentos
+#Definindo os movimentos e velocidades para não sair da tela
     def movimentacao(self, vel):
         self.y += vel
 
@@ -76,10 +76,10 @@ class Virus:
 
 #Criação de uma orientação a objetos da Nave (Anti-vírus) com várias funções definidas
 #para desenhar, mover, atirar e outras funcionalidades do jogo
-class MCAFEE:
-    espera = 30
 
-    def __init__(self, x, y, health=100):
+class MCAFEE: #Classe do antivírus
+    espera = 30 #coloquei 30 de espera, mas se você quiser, pode mudar
+    def __init__(self, x, y, health=100): #Health é a "saúde" ou "quantidade de vida"
         self.x = x
         self.y = y
         self.health = health
@@ -102,6 +102,26 @@ class MCAFEE:
             elif laser.impacto(obj):
                 obj.health -= 10 #perde 10
                 self.lasers.remove(laser)
+    
+    def tempo_espera(self): #Define tempo de espera
+        if self.contador_tempo_espera >= self.espera:
+            self.contador_tempo_espera = 0
+        elif self.contador_tempo_espera > 0:
+            self.contador_tempo_espera += 1
+
+    def atirar(self): #Função designada para atirar
+        if self.contador_tempo_espera == 0:
+            laser = Virus(self.x, self.y, self.laser_img)
+            self.lasers.append(laser)
+            self.contador_tempo_espera = 1
+
+    def get_width(self):
+        return self.nave_img.get_width()
+
+    def get_height(self):
+        return self.nave_img.get_height()
+
+#Lembrete: Começar  a definir classe do jogador!!
 
 def main(): #Função principal
     anda = True
