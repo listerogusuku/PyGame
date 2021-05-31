@@ -58,9 +58,11 @@ class Virus:
         self.y = y
         self.img = img
         self.mask = pygame.mask.from_surface(self.img)
+
 #Desenhando a janela do jogo
     def desenhar(self, janela_game):
         janela_game.blit(self.img, (self.x, self.y))
+
 #Definindo os movimentos
     def movimentacao(self, vel):
         self.y += vel
@@ -71,6 +73,35 @@ class Virus:
     def impacto(self, obj):
         return colisao(self, obj)
 
+
+#Criação de uma orientação a objetos da Nave (Anti-vírus) com várias funções definidas
+#para desenhar, mover, atirar e outras funcionalidades do jogo
+class MCAFEE:
+    espera = 30
+
+    def __init__(self, x, y, health=100):
+        self.x = x
+        self.y = y
+        self.health = health
+        self.nave_img = None
+        self.laser_img = None
+        self.lasers = []
+        self.contador_tempo_espera = 0
+
+    def desenhar(self, janela_game):
+        janela_game.blit(self.nave_img, (self.x, self.y))
+        for laser in self.lasers:
+            laser.desenhar(janela_game)
+
+    def move_lasers(self, vel, obj):
+        self.tempo_espera()
+        for laser in self.lasers:
+            laser.movimentacao(vel)
+            if laser.fora_da_tela(HEIGHT):
+                self.lasers.remove(laser)
+            elif laser.impacto(obj):
+                obj.health -= 10 #perde 10
+                self.lasers.remove(laser)
 
 def main(): #Função principal
     anda = True
