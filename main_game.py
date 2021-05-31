@@ -121,7 +121,34 @@ class MCAFEE: #Classe do antivírus
     def get_height(self):
         return self.nave_img.get_height()
 
-#Lembrete: Começar  a definir classe do jogador!!
+#Class que orienta as ações tomadas pelo nosso jogador principal, representado pelo antivírus McAfee
+
+class Jogador(MCAFEE):
+    def __init__(self, x, y, health=500):
+        super().__init__(x, y, health)
+        self.nave_img = mcafee
+        self.laser_img = ANTIVIRUS
+        self.mask = pygame.mask.from_surface(self.nave_img)
+        self.max_health = health
+
+    def move_lasers(self, vel, objs):
+        self.tempo_espera()
+        for laser in self.lasers:
+            laser.movimentacao(vel)
+            if laser.fora_da_tela(HEIGHT):
+                self.lasers.remove(laser)
+            else:
+                for obj in objs:
+                    if laser.impacto(obj): #criação das condicionais para o  impacto
+                        objs.remove(obj) #remoção do objeto em caso de impacto
+                        if laser in self.lasers:
+                            self.lasers.remove(laser)
+
+    def desenhar(self, janela_game):  
+        super().desenhar(janela_game)
+        self.barra_de_vidas(janela_game) #introdução da barra de vidas
+
+#Lembre-se de criar a barra de vidas
 
 def main(): #Função principal
     anda = True
