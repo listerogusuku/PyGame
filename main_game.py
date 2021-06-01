@@ -148,7 +148,38 @@ class Jogador(MCAFEE):
         super().desenhar(janela_game)
         self.barra_de_vidas(janela_game) #introdução da barra de vidas
 
-#Lembre-se de criar a barra de vidas
+    #Criação da barrinha de vidas que ainda há disponível
+    def barra_de_vidas(self, janela_game): #Vida disponível
+        pygame.draw.rect(janela_game, (255, 0, 0), (self.x, self.y + self.nave_img.get_height() + 12, self.nave_img.get_width(), 12))
+        pygame.draw.rect(janela_game, (0, 0, 255), (self.x, self.y + self.nave_img.get_height() + 12, self.nave_img.get_width() * (self.health/self.max_health), 12))
+
+#Criação de uma orientação a objetos relacionada à nave do inimigo (vírus)
+#e sua variação de cores para o jogo
+class Inimigo(MCAFEE): #Nave Inimiga (Antivírus)
+    COR_MAP = {
+                "vermelho": (VIRUS_VERMELHO, CONTAMINACAO_CAVEIRA),
+                "verde": (VIRUS_ERRO, CONTAMINACAO_ERRO),
+                "azul": (VIRUS_TROJAN, CONTAMINACAO_AMARELA)
+                }
+
+    def __init__(self, x, y, cor, health=100):
+        super().__init__(x, y, health)
+        self.nave_img, self.laser_img = self.COR_MAP[cor]
+        self.mask = pygame.mask.from_surface(self.nave_img)
+
+    def movimentacao(self, vel):
+        self.y += vel
+
+    def atirar(self):
+        if self.contador_tempo_espera == 0:
+            laser = Virus(self.x-20, self.y, self.laser_img)
+            self.lasers.append(laser)
+            self.contador_tempo_espera = 1
+
+def colisao(obj1, obj2): #Define a colisão dos objetos
+    desloc_x = obj2.x - obj1.x 
+    desloc_y = obj2.y - obj1.y 
+    return obj1.mask.overlap(obj2.mask, (desloc_x, desloc_y)) != None  
 
 def main(): #Função principal
     anda = True
