@@ -122,7 +122,6 @@ class MCAFEE: #Classe do antivírus
         return self.nave_img.get_height()
 
 #Class que orienta as ações tomadas pelo nosso jogador principal, representado pelo antivírus McAfee
-
 class Jogador(MCAFEE):
     def __init__(self, x, y, health=500):
         super().__init__(x, y, health)
@@ -139,27 +138,26 @@ class Jogador(MCAFEE):
                 self.lasers.remove(laser)
             else:
                 for obj in objs:
-                    if laser.impacto(obj): #criação das condicionais para o  impacto
-                        objs.remove(obj) #remoção do objeto em caso de impacto
+                    if laser.impacto(obj): #criação do if para o momento do impacto
+                        objs.remove(obj) #remoção do obj em caso de impacto
                         if laser in self.lasers:
                             self.lasers.remove(laser)
 
-    def desenhar(self, janela_game):  
+    def desenhar(self, janela_game):  #Essa é a janelinha de vidas que a gente conversou no atendimento?
         super().desenhar(janela_game)
-        self.barra_de_vidas(janela_game) #introdução da barra de vidas
+        self.barra_de_vidas(janela_game) #Janelinha da barra de vidas
 
-    #Criação da barrinha de vidas que ainda há disponível
+#Criação da barrinha de vidas que ainda há disponível
     def barra_de_vidas(self, janela_game): #Vida disponível
         pygame.draw.rect(janela_game, (255, 0, 0), (self.x, self.y + self.nave_img.get_height() + 12, self.nave_img.get_width(), 12))
         pygame.draw.rect(janela_game, (0, 0, 255), (self.x, self.y + self.nave_img.get_height() + 12, self.nave_img.get_width() * (self.health/self.max_health), 12))
 
-#Criação de uma orientação a objetos relacionada à nave do inimigo (vírus)
-#e sua variação de cores para o jogo
-class Inimigo(MCAFEE): #Nave Inimiga (Antivírus)
+#Class dos vírus contaminantes com variação na cor deles, pra deixar mais atraente e bonitinho para o jogo
+class Inimigo(MCAFEE):
     COR_MAP = {
-                "vermelho": (VIRUS_VERMELHO, CONTAMINACAO_CAVEIRA),
-                "verde": (VIRUS_ERRO, CONTAMINACAO_ERRO),
-                "azul": (VIRUS_TROJAN, CONTAMINACAO_AMARELA)
+                "caveira": (VIRUS_VERMELHO, CONTAMINACAO_CAVEIRA),
+                "erro": (VIRUS_ERRO, CONTAMINACAO_ERRO),
+                "trojan": (VIRUS_TROJAN, CONTAMINACAO_AMARELA)
                 }
 
     def __init__(self, x, y, cor, health=100):
@@ -177,29 +175,118 @@ class Inimigo(MCAFEE): #Nave Inimiga (Antivírus)
             self.contador_tempo_espera = 1
 
 def colisao(obj1, obj2): #Define a colisão dos objetos
-    desloc_x = obj2.x - obj1.x 
-    desloc_y = obj2.y - obj1.y 
-    return obj1.mask.overlap(obj2.mask, (desloc_x, desloc_y)) != None  
+    desloc_x = obj2.x - obj1.x #Deslocamento em x
+    desloc_y = obj2.y - obj1.y #Deslocamento em y
+    return obj1.mask.overlap(obj2.mask, (desloc_x, desloc_y)) != None  #retorna objetos
 
-def main(): #Função principal
+def main(): #Função principal do nosso jogo
     anda = True
-    FPS = 60
+    FPS = 100
     fase = 0
-    vidas = 5
-    texto_inicio = pygame.font.SysFont("Arial", 50) #Escolhemos a fonte Arial por ser uma fonte padrão
-    texto_quando_perde = pygame.font.SysFont("Arial", 60) #não achei a fonte tão legal, vc não acha que seria melhor uma mais estilo game?
+    vidas = 10
+    texto_inicio = pygame.font.SysFont("Cooper Black", 30) #Achei essa fonte mais legal que as outras para o estilo do jogo. Se
+                                                           #você não gostar mutio ou encontrar outra melhor, me fala
+    texto_quando_perde = pygame.font.SysFont("Cooper Black", 40)
 
-    inimigos = [] #precisamos definir os inimigos!!!
-    alcance_do_inimigo = 5
-    velocidade_do_inimigo = 1
+    inimigos = []
+    alcance_do_inimigo = 3
+    velocidade_do_inimigo = 2
 
     velocidade_do_jogador = 5
-    velocidade_da_bala = 5
+    velocidade_do_laser = 5
 
-    jogador = Jogador(300, 630) #criar classe do jogador
+    jogador = Jogador(300, 630)
 
     temporizador = pygame.time.Clock()
 
     perdeu = False
-    contada_perdas = 0 #não entendi o que vc quis dizer aqui
+    contador_perdeu = 0
+#Escrita na tela das vidas e fases
 
+    def desenhar_janela():
+        JANELA.blit(BACKGROUND, (0,0))
+        vidas_label = texto_inicio.render(f"Vidas: {vidas}", 1, (255,255,255))
+        fase_label = texto_inicio.render(f"Fase: {fase}", 1, (255,255,255))
+
+        JANELA.blit(vidas_label, (10, 10))
+        JANELA.blit(fase_label, (WIDTH - fase_label.get_width() - 10, 10))
+
+        for inimigo in inimigos:
+            inimigo.desenhar(JANELA)
+
+        jogador.desenhar(JANELA)
+
+        if perdeu:
+            texto_perdeu = texto_quando_perde.render("VOCÊ FOI HACKEADO", 1, (255, 0, 0))
+            JANELA.blit(texto_perdeu, (WIDTH/2 - texto_perdeu.get_width()/2, 350))
+
+        pygame.display.update()
+
+    while anda:
+        temporizador.tick(FPS)
+        desenhar_janela()
+
+        if vidas <= 0 or jogador.health <= 0:
+            perdeu = True
+            contador_perdeu += 1
+        if perdeu:
+            if contador_perdeu > FPS*3:
+                anda = False
+            else:
+                continue
+        if len(inimigos) == 0:
+            fase += 1
+            alcance_do_inimigo += 5
+            for i in range(alcance_do_inimigo):
+                inimigo = Inimigo(random.randrange(50, WIDTH-100), random.randrange(-1500, -100), random.choice(["caveira", "trojan", "erro"]))
+                inimigos.append(inimigo)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                quit()
+
+
+#Criando e configurando os "botões" do nosso jogo (A, D, W, S, SPACE) → "Setinhas"
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_a] and jogador.x - velocidade_do_jogador > 0: #Setinha da esquerda
+            jogador.x -= velocidade_do_jogador
+        if keys[pygame.K_d] and jogador.x + velocidade_do_jogador + jogador.get_width() < WIDTH: #Setinha da direita
+            jogador.x += velocidade_do_jogador
+        if keys[pygame.K_w] and jogador.y - velocidade_do_jogador > 0: #Setinha pra cima
+            jogador.y -= velocidade_do_jogador
+        if keys[pygame.K_s] and jogador.y + velocidade_do_jogador + jogador.get_height() + 15 < HEIGHT: #Setinha pra baixo
+            jogador.y += velocidade_do_jogador
+        if keys[pygame.K_SPACE]: #Espaço para atirar
+            jogador.atirar()
+
+        for inimigo in inimigos[:]:
+            inimigo.movimentacao(velocidade_do_inimigo)
+            inimigo.move_lasers(velocidade_do_laser, jogador)
+
+            if random.randrange(0, 2*60) == 1:
+                inimigo.atirar()
+            if colisao(inimigo, jogador):
+                jogador.health -= 10
+                inimigos.remove(inimigo)
+            elif inimigo.y + inimigo.get_height() > HEIGHT:
+                vidas -= 1
+                inimigos.remove(inimigo)
+        jogador.move_lasers(-velocidade_do_laser, inimigos)
+
+def tela_principal():
+    fonte_titulo = pygame.font.SysFont("Cooper Black", 70)
+    anda = True
+    while anda:
+        JANELA.blit(BACKGROUND, (0,0))
+        title_label = fonte_titulo.render("CLIQUE NA TELA", 1, (255,255,255))
+        JANELA.blit(title_label, (WIDTH/2 - title_label.get_width()/2, 350))
+        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                anda = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                main()
+    pygame.quit()
+
+
+tela_principal()
