@@ -1,5 +1,4 @@
 #Jogo criado utilizando a Biblioteca Pygame
-#A ideia do jogo é
 
 #Integrantes do grupo:
 #Celina Melo e Lister Ogusuku
@@ -287,12 +286,12 @@ def main(): #Função principal do nosso jogo
         jogador.move_lasers(-velocidade_do_laser, inimigos)
 
 def tela_principal():
-    fonte_titulo = pygame.font.SysFont("Cooper Black", 70)
+    fonte_titulo = pygame.font.SysFont("Cooper Black", 40)
     anda = True
     while anda:
         JANELA.blit(BACKGROUND, (0,0))
-        title_label = fonte_titulo.render("CLIQUE NA TELA", 1, (255,255,0))
-        JANELA.blit(title_label, (WIDTH/2 - title_label.get_width()/2, 350))
+        title_label = fonte_titulo.render("CLIQUE PARA COMEÇAR", 1, (255,255,0))
+        JANELA.blit(title_label, (WIDTH/2 - title_label.get_width()/2, 300))
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
