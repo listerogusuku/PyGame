@@ -202,32 +202,60 @@ def main(): #Função principal do nosso jogo
     perdeu = False
     contador_perdeu = 0
 
+    while anda:
+        temporizador.tick(FPS)
+        desenhar_janela()
 
-#TODO ESSE TRECHO ABAIXO É BASEADO NO HANDOUT DO PYGAME, ENTÃO PRECISAMOS ADAPTAR PARA NOSSO JOGO:
+        if vidas <= 0 or jogador.health <= 0:
+            perdeu = True
+            contador_perdeu += 1
+        if perdeu:
+            if contador_perdeu > FPS*3:
+                anda = False
+            else:
+                continue
+        if len(inimigos) == 0:
+            fase += 1
+            alcance_do_inimigo += 5
+            for i in range(alcance_do_inimigo):
+                inimigo = Inimigo(random.randrange(50, WIDTH-100), random.randrange(-1500, -100), random.choice(["caveira", "trojan", "erro"]))
+                inimigos.append(inimigo)
+                
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                quit()
 
-# ===== Loop principal =====
-pygame.mixer.music.play(loops=-1)
-while game:
-    clock.tick(FPS)
+#Criando e configurando os "botões" do nosso jogo (A, D, W, S, SPACE) → "Setinhas"
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_a] and jogador.x - velocidade_do_jogador > 0: #Setinha da esquerda
+            jogador.x -= velocidade_do_jogador
+        if keys[pygame.K_d] and jogador.x + velocidade_do_jogador + jogador.get_width() < WIDTH: #Setinha da direita
+            jogador.x += velocidade_do_jogador
+        if keys[pygame.K_w] and jogador.y - velocidade_do_jogador > 0: #Setinha pra cima
+            jogador.y -= velocidade_do_jogador
+        if keys[pygame.K_s] and jogador.y + velocidade_do_jogador + jogador.get_height() + 15 < HEIGHT: #Setinha pra baixo
+            jogador.y += velocidade_do_jogador
+        if keys[pygame.K_SPACE]: #Espaço para atirar
+            jogador.atirar()
 
-    # ----- Trata eventos
-    for event in pygame.event.get():
-        # ----- Verifica consequências
-        if event.type == pygame.QUIT:
-            game = False
-        # Verifica se apertou alguma tecla.
-        if event.type == pygame.KEYDOWN:
-            # Dependendo da tecla, altera a velocidade.
-            if event.key == pygame.K_LEFT:
-                player.speedx -= 8
-            if event.key == pygame.K_RIGHT:
-                player.speedx += 8
-            if event.key == pygame.K_SPACE:
-                player.shoot()
-        # Verifica se soltou alguma tecla.
-        if event.type == pygame.KEYUP:
-            # Dependendo da tecla, altera a velocidade.
-            if event.key == pygame.K_LEFT:
-                player.speedx += 8
-            if event.key == pygame.K_RIGHT:
-                player.speedx -= 8
+        for inimigo in inimigos[:]:
+            inimigo.movimentacao(velocidade_do_inimigo)
+            inimigo.move_lasers(velocidade_do_laser, jogador)
+            if random.randrange(0, 2*60) == 1:
+                inimigo.atirar()
+            if colisao(inimigo, jogador):
+                jogador.health -= 10
+                inimigos.remove(inimigo)
+            elif inimigo.y + inimigo.get_height() > HEIGHT:
+                vidas -= 1
+                inimigos.remove(inimigo)
+        jogador.move_lasers(-velocidade_do_laser, inimigos)
+
+def tela_principal():
+    #colocar as funções de quando ele anda (puxar) + fonte + while do anda
+    #puxar o background
+    #dar o quit
+
+
+
+tela_principal() #chama função
