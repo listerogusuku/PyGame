@@ -23,8 +23,21 @@ import os
 import time
 import random
 
-pygame.font.init() #Inicializa as fontes do pygame para serem utilizadas no jogo
+from pygame import mixer
 
+#Inicializa o mixer de música
+mixer.init()
+
+#Carrega a música escolhida
+mixer.music.load("musica_jogo_versaodigital.mp3")
+
+#Ajusta o volume
+mixer.music.set_volume(0.5)
+
+#Começa a tocar a música
+mixer.music.play()
+
+pygame.font.init() #Inicializa as fontes do pygame para serem utilizadas no jogo
 
 #Definindo altura e largura da janela do jogo
 WIDTH, HEIGHT = 700, 700 #Dimensões da tela
@@ -183,14 +196,14 @@ def main(): #Função principal do nosso jogo
     anda = True
     FPS = 100
     fase = 0
-    vidas = 10
+    vidas = 15
     texto_inicio = pygame.font.SysFont("Cooper Black", 30) #Achei essa fonte mais legal que as outras para o estilo do jogo. Se
                                                            #você não gostar mutio ou encontrar outra melhor, me fala
     texto_quando_perde = pygame.font.SysFont("Cooper Black", 40)
 
     inimigos = []
     alcance_do_inimigo = 3
-    velocidade_do_inimigo = 2
+    velocidade_do_inimigo = 3
 
     velocidade_do_jogador = 5
     velocidade_do_laser = 5
