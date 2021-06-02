@@ -1,5 +1,5 @@
 #Jogo criado utilizando a Biblioteca Pygame
-#A ideia do jogo é == ideia do jogo aqui ==
+#A ideia do jogo é
 
 #Integrantes do grupo:
 #Celina Melo e Lister Ogusuku
@@ -40,9 +40,9 @@ mixer.music.play()
 pygame.font.init() #Inicializa as fontes do pygame para serem utilizadas no jogo
 
 #Definindo altura e largura da janela do jogo
-WIDTH, HEIGHT = 700, 700 #Dimensões da tela
+WIDTH, HEIGHT = 650, 650 #Dimensões da tela
 JANELA = pygame.display.set_mode((WIDTH, HEIGHT)) #Definição do display
-pygame.display.set_caption("Kill Covid Game") #Nome do jogo
+pygame.display.set_caption("Stop Hacker Invasion")
 
 #Imagens que vão ser utilizadas
 VIRUS_VERMELHO = pygame.image.load(os.path.join("caveira_virus.png")) #Vírus Caveira Vermelha
@@ -59,7 +59,7 @@ CONTAMINACAO_AMARELA = pygame.image.load(os.path.join("laser_virus_amarelo_troja
 ANTIVIRUS = pygame.image.load(os.path.join("remedio_antivirus.png")) #remédio do antivírus
 
 #Fundo do jogo
-BACKGROUND = pygame.transform.scale(pygame.image.load(os.path.join("background_tech.png")), (WIDTH, HEIGHT)) #fundo do jogo (POR ENQUANTO TEMPORÁRIO, PODEREMOS ALTERAR EM BREVE PARA UM MELHOR!!!)
+BACKGROUND = pygame.transform.scale(pygame.image.load(os.path.join("background_tech_Insper.png")), (WIDTH, HEIGHT)) #fundo do jogo (POR ENQUANTO TEMPORÁRIO, PODEREMOS ALTERAR EM BREVE PARA UM MELHOR!!!)
 #Eu também coloquei algumas imagens que, se você quiser, podemos alterar, mas achei bonitinho para o início
 #Se for necessário, eu consigo fazer outras imagens também
 
@@ -291,7 +291,7 @@ def tela_principal():
     anda = True
     while anda:
         JANELA.blit(BACKGROUND, (0,0))
-        title_label = fonte_titulo.render("CLIQUE NA TELA", 1, (255,255,255))
+        title_label = fonte_titulo.render("CLIQUE NA TELA", 1, (255,255,0))
         JANELA.blit(title_label, (WIDTH/2 - title_label.get_width()/2, 350))
         pygame.display.update()
         for event in pygame.event.get():
