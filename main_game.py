@@ -1,9 +1,12 @@
 #Jogo criado utilizando a Biblioteca Pygame
 
+#A ideia do jogo é impedir uma invasão de vírus e problemas de computador por
+#meio do antivírus McAfee, que é movido como sendo nosso jogador.
+
 #Integrantes do grupo:
 #Celina Melo e Lister Ogusuku
 
-# Professor: Humberto Sandmann
+#Professor: Humberto Sandmann
 
 #Link do vídeo: 
 
@@ -11,18 +14,13 @@
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#Assim como havíamos conversado, acho que nosso jogo pode atirar em zumbis ou criar
-#tipo de uma competição entre brands, na qual uma destruiria a outra, entende?
-#vamos conversar melhor sobre esses tópicos quando nos reunirmos, ok?
-#Só estou escrevendo aqui para não nos esquecermos
-
 #Importando as bibliotecas necessárias
 import pygame
 import os
 import time
 import random
 
-from pygame import mixer
+from pygame import mixer #Para colocar a música
 
 #Inicializa o mixer de música
 mixer.init()
@@ -133,6 +131,7 @@ class MCAFEE: #Classe do antivírus
     def get_height(self):
         return self.nave_img.get_height()
 
+
 #Class que orienta as ações tomadas pelo nosso jogador principal, representado pelo antivírus McAfee
 class Jogador(MCAFEE):
     def __init__(self, x, y, health=500):
@@ -163,6 +162,7 @@ class Jogador(MCAFEE):
     def barra_de_vidas(self, janela_game): #Vida disponível
         pygame.draw.rect(janela_game, (255, 0, 0), (self.x, self.y + self.nave_img.get_height() + 12, self.nave_img.get_width(), 12))
         pygame.draw.rect(janela_game, (0, 0, 255), (self.x, self.y + self.nave_img.get_height() + 12, self.nave_img.get_width() * (self.health/self.max_health), 12))
+
 
 #Class dos vírus contaminantes com variação na cor deles, pra deixar mais atraente e bonitinho para o jogo
 class Inimigo(MCAFEE):
@@ -196,8 +196,7 @@ def main(): #Função principal do nosso jogo
     FPS = 100
     fase = 0
     vidas = 15
-    texto_inicio = pygame.font.SysFont("Cooper Black", 30) #Achei essa fonte mais legal que as outras para o estilo do jogo. Se
-                                                           #você não gostar mutio ou encontrar outra melhor, me fala
+    texto_inicio = pygame.font.SysFont("Cooper Black", 30)
     texto_quando_perde = pygame.font.SysFont("Cooper Black", 40)
 
     inimigos = []
@@ -213,8 +212,9 @@ def main(): #Função principal do nosso jogo
 
     perdeu = False
     contador_perdeu = 0
-#Escrita na tela das vidas e fases
 
+
+#Escrita na tela das vidas e fases
     def desenhar_janela():
         JANELA.blit(BACKGROUND, (0,0))
         vidas_label = texto_inicio.render(f"Vidas: {vidas}", 1, (255,255,255))
