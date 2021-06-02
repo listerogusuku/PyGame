@@ -26,7 +26,7 @@ from pygame import mixer #Para colocar a música
 mixer.init()
 
 #Carrega a música escolhida
-mixer.music.load("musica_jogo_versaodigital.mp3")
+mixer.music.load("Orbital_Colossus.mp3")
 
 #Ajusta o volume
 mixer.music.set_volume(0.5)
@@ -37,7 +37,7 @@ mixer.music.play()
 pygame.font.init() #Inicializa as fontes do pygame para serem utilizadas no jogo
 
 #Definindo altura e largura da janela do jogo
-WIDTH, HEIGHT = 650, 650 #Dimensões da tela
+WIDTH, HEIGHT = 700, 700 #Dimensões da tela
 JANELA = pygame.display.set_mode((WIDTH, HEIGHT)) #Definição do display
 pygame.display.set_caption("Stop Hacker Invasion")
 
@@ -59,7 +59,6 @@ ANTIVIRUS = pygame.image.load(os.path.join("remedio_antivirus.png")) #remédio d
 BACKGROUND = pygame.transform.scale(pygame.image.load(os.path.join("background_tech_Insper.png")), (WIDTH, HEIGHT)) #fundo do jogo (POR ENQUANTO TEMPORÁRIO, PODEREMOS ALTERAR EM BREVE PARA UM MELHOR!!!)
 #Eu também coloquei algumas imagens que, se você quiser, podemos alterar, mas achei bonitinho para o início
 #Se for necessário, eu consigo fazer outras imagens também
-
 
 #Orientação dos vírus
 class Virus:
