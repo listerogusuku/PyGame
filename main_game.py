@@ -8,9 +8,16 @@
 
 #Professor: Humberto Sandmann
 
-#Link do vídeo: 
-
 #Projeto Final | Design de Software | Insper 2021.1
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Fontes de pesquisa:
+
+- Handout PyGame https://dessoft.insper-comp.com.br/conteudo/pygame
+- Google Imagens
+- https://opengameart.org/
+- https://www.pygame.org/docs/
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
