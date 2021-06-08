@@ -10,14 +10,16 @@
 
 #Projeto Final | Design de Software | Insper 2021.1
 
+#Link do vídeo: 
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-Fontes de pesquisa:
+# Fontes de pesquisa:
 
-- Handout PyGame https://dessoft.insper-comp.com.br/conteudo/pygame
-- Google Imagens
-- https://opengameart.org/
-- https://www.pygame.org/docs/
+# - Handout PyGame https://dessoft.insper-comp.com.br/conteudo/pygame
+# - Google Imagens
+# - https://opengameart.org/
+# - https://www.pygame.org/docs/
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
