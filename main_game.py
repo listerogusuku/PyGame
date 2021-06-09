@@ -38,7 +38,7 @@ mixer.init()
 mixer.music.load("Orbital_Colossus.mp3")
 
 #Ajusta o volume
-mixer.music.set_volume(0.5)
+mixer.music.set_volume(0.3)
 
 #Começa a tocar a música
 mixer.music.play()
@@ -48,7 +48,7 @@ pygame.font.init() #Inicializa as fontes do pygame para serem utilizadas no jogo
 #Definindo altura e largura da janela do jogo
 WIDTH, HEIGHT = 700, 700 #Dimensões da tela
 JANELA = pygame.display.set_mode((WIDTH, HEIGHT)) #Definição do display
-pygame.display.set_caption("Stop Hacker Invasion")
+pygame.display.set_caption("Stop Hacker Invasion") #Nome do jogo que aparece em cima, na sua janela fixa
 
 #Imagens que vão ser utilizadas
 VIRUS_VERMELHO = pygame.image.load(os.path.join("caveira_virus.png")) #Vírus Caveira Vermelha
@@ -65,9 +65,7 @@ CONTAMINACAO_AMARELA = pygame.image.load(os.path.join("laser_virus_amarelo_troja
 ANTIVIRUS = pygame.image.load(os.path.join("remedio_antivirus.png")) #remédio do antivírus
 
 #Fundo do jogo
-BACKGROUND = pygame.transform.scale(pygame.image.load(os.path.join("background_tech_Insper.png")), (WIDTH, HEIGHT)) #fundo do jogo (POR ENQUANTO TEMPORÁRIO, PODEREMOS ALTERAR EM BREVE PARA UM MELHOR!!!)
-#Eu também coloquei algumas imagens que, se você quiser, podemos alterar, mas achei bonitinho para o início
-#Se for necessário, eu consigo fazer outras imagens também
+BACKGROUND = pygame.transform.scale(pygame.image.load(os.path.join("background_tech_Insper.png")), (WIDTH, HEIGHT)) #fundo do jogo
 
 #Orientação dos vírus
 class Virus:
@@ -96,7 +94,7 @@ class Virus:
 #para desenhar, mover, atirar e outras funcionalidades do jogo
 
 class MCAFEE: #Classe do antivírus
-    espera = 30 #coloquei 30 de espera, mas se você quiser, pode mudar
+    espera = 30
     def __init__(self, x, y, health=100): #Health é a "saúde" ou "quantidade de vida"
         self.x = x
         self.y = y
@@ -140,7 +138,7 @@ class MCAFEE: #Classe do antivírus
         return self.nave_img.get_height()
 
 
-#Class que orienta as ações tomadas pelo nosso jogador principal, representado pelo antivírus McAfee
+#Classe que orienta as ações tomadas pelo nosso jogador principal, representado pelo antivírus McAfee
 class Jogador(MCAFEE):
     def __init__(self, x, y, health=500):
         super().__init__(x, y, health)
@@ -162,7 +160,7 @@ class Jogador(MCAFEE):
                         if laser in self.lasers:
                             self.lasers.remove(laser)
 
-    def desenhar(self, janela_game):  #Essa é a janelinha de vidas que a gente conversou no atendimento?
+    def desenhar(self, janela_game):
         super().desenhar(janela_game)
         self.barra_de_vidas(janela_game) #Janelinha da barra de vidas
 
@@ -172,7 +170,7 @@ class Jogador(MCAFEE):
         pygame.draw.rect(janela_game, (0, 0, 255), (self.x, self.y + self.nave_img.get_height() + 12, self.nave_img.get_width() * (self.health/self.max_health), 12))
 
 
-#Class dos vírus contaminantes com variação na cor deles, pra deixar mais atraente e bonitinho para o jogo
+#Classe dos vírus contaminantes com variação na cor deles, pra deixar mais atraente e bonitinho para o jogo
 class Inimigo(MCAFEE):
     COR_MAP = {
                 "caveira": (VIRUS_VERMELHO, CONTAMINACAO_CAVEIRA),
@@ -197,19 +195,19 @@ class Inimigo(MCAFEE):
 def colisao(obj1, obj2): #Define a colisão dos objetos
     desloc_x = obj2.x - obj1.x #Deslocamento em x
     desloc_y = obj2.y - obj1.y #Deslocamento em y
-    return obj1.mask.overlap(obj2.mask, (desloc_x, desloc_y)) != None  #retorna objetos
+    return obj1.mask.overlap(obj2.mask, (desloc_x, desloc_y)) != None
 
 def main(): #Função principal do nosso jogo
     anda = True
     FPS = 100
     fase = 0
     vidas = 15
-    texto_inicio = pygame.font.SysFont("Cooper Black", 30)
+    texto_inicio = pygame.font.SysFont("Cooper Black", 30) #Fonte escolhida para o jogo + tamanho
     texto_quando_perde = pygame.font.SysFont("Cooper Black", 40)
 
     inimigos = []
     alcance_do_inimigo = 3
-    velocidade_do_inimigo = 3
+    velocidade_do_inimigo = 3 #Velocidade com que nossos vírus realizam o ataque
 
     velocidade_do_jogador = 5
     velocidade_do_laser = 5
@@ -237,7 +235,7 @@ def main(): #Função principal do nosso jogo
         jogador.desenhar(JANELA)
 
         if perdeu:
-            texto_perdeu = texto_quando_perde.render("VOCÊ FOI HACKEADO", 1, (255, 0, 0))
+            texto_perdeu = texto_quando_perde.render("VOCÊ FOI HACKEADO", 1, (255, 0, 0)) #Texto para quando o jogador perde o jogo
             JANELA.blit(texto_perdeu, (WIDTH/2 - texto_perdeu.get_width()/2, 350))
 
         pygame.display.update()
@@ -266,7 +264,7 @@ def main(): #Função principal do nosso jogo
                 quit()
 
 
-#Criando e configurando os "botões" do nosso jogo (A, D, W, S, SPACE) → "Setinhas"
+#Criando e configurando os "botões" do nosso jogo (A, D, W, S, SPACE) → "Setinhas" tradicionais de um jogo de computador
         keys = pygame.key.get_pressed()
         if keys[pygame.K_a] and jogador.x - velocidade_do_jogador > 0: #Setinha da esquerda
             jogador.x -= velocidade_do_jogador
@@ -298,11 +296,11 @@ def tela_principal():
     anda = True
     while anda:
         JANELA.blit(BACKGROUND, (0,0))
-        title_label = fonte_titulo.render("CLIQUE PARA COMEÇAR", 1, (255,255,0))
+        title_label = fonte_titulo.render("CLIQUE PARA COMEÇAR", 1, (255,255,0)) #Botão inicial que indica ao jogador o que ele deve fazer para iniciar o jogo
         JANELA.blit(title_label, (WIDTH/2 - title_label.get_width()/2, 300))
         pygame.display.update()
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT: #Saída do jogo
                 anda = False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 main()
