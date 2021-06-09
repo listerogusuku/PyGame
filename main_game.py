@@ -10,7 +10,7 @@
 
 #Projeto Final | Design de Software | Insper 2021.1
 
-#Link do vídeo: 
+#Link do vídeo: https://youtu.be/7FEErXptook
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
